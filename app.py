@@ -544,11 +544,22 @@ with pestanas[2]:
 
 # --- Tablero de Power BI (requisito de la consigna) -------------------------------------------
 with pestanas[4]:
-    if POWER_BI_URL:                                                     # si ya está publicado...
+    captura = RAIZ / "powerbi" / "captura_tablero.png"                   # captura del tablero (categoría Ligero)
+    archivo_pbix = RAIZ / "powerbi" / "Tablero del Ranking.pbix"         # el tablero original de Power BI
+    if POWER_BI_URL:                                                     # si algún día se publica en la web...
         st.components.v1.iframe(POWER_BI_URL, height=650)                # ...se muestra embebido
-    else:                                                                # si todavía no...
-        st.info("Acá va a ir el tablero de Power BI (publicado con «Publicar en la web»). "
-                "Usa solo datos públicos de UFCStats.")                  # ...un aviso
+    else:                                                                # si no: captura + archivo para descargar
+        st.markdown("Tablero hecho en **Power BI** con datos públicos de UFCStats: el top 15 de cada "
+                    "categoría con los rankings oficiales al lado, cuánto coinciden y los resultados del modelo.")
+        if captura.exists():                                             # si está la captura en el repositorio...
+            st.image(str(captura), caption="Vista del tablero (categoría Ligero)",
+                     use_container_width=True)                           # ...se muestra a todo el ancho
+        if archivo_pbix.exists():                                        # si está el archivo .pbix...
+            st.download_button("⬇ Descargar el tablero (.pbix)",         # ...botón para bajarlo
+                               archivo_pbix.read_bytes(), file_name="Tablero del Ranking.pbix")
+        st.caption("Para usarlo de forma interactiva, abrir el archivo con Power BI Desktop (gratis). "
+                   "Se entrega como archivo porque la publicación web de Power BI está deshabilitada "
+                   "en la cuenta del INA, por indicación del profesor.")  # por qué no está embebido
 
 # --- Cómo funciona: explicación para el usuario, sin tecnicismos -------------------------------
 with pestanas[5]:
