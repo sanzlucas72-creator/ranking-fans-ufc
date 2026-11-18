@@ -30,7 +30,7 @@ H4 faltantes disfrazados ("--") · H5 9 homónimos · H6 120 etiquetas de catego
 | 9 | Presentación, guion y video (6 min 21 s) | La presentación cubre todo el proyecto, como pidió el profesor |
 | 10 | La app se abre sola con ▷ o F5 | Que el profesor no tenga que escribir comandos |
 | 11 | Publicación: GitHub (`sanzlucas72-creator/ranking-fans-ufc`) + Streamlit Community Cloud → https://ranking-fans-ufc.streamlit.app/ | Requisito de la Etapa 2: la app tiene que estar online para el profesor y el usuario |
-| 12 | Tablero de Power BI (`powerbi/`, guía en `docs/powerbi_paso_a_paso.md`) | Requisito de la Etapa 2. Una sola hoja: top 15 vs. oficiales, coincidencias y modelo. Entregado como `.pbix` + captura en el README |
+| 12 | Tablero de Power BI (`powerbi/`, con su guía de armado) | Requisito de la Etapa 2. Una sola hoja: top 15 vs. oficiales, coincidencias y modelo. Entregado como `.pbix` + captura en el README |
 | 13 | Ficha del peleador: filtro por categoría, búsqueda por nombre (sin importar tildes) y lista en orden del ranking (campeón, #1, #2…) | Iteración por uso: con 616 peleadores en un solo menú había que scrollear demasiado para encontrar a uno |
 
 ## Modelo de machine learning, en detalle

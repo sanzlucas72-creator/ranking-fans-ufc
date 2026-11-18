@@ -69,8 +69,8 @@ entre sí un 86%).
 ### Tablero de Power BI
 
 Una sola hoja: top 15 de cada categoría con los puestos de MEDIA y META al lado, cuánto coincide con los
-oficiales y los resultados del modelo. Archivo: **[`powerbi/tablero_ranking_fans.pbix`](powerbi/tablero_ranking_fans.pbix)**
-(se abre con Power BI Desktop, gratis). Guía de armado: [`docs/powerbi_paso_a_paso.md`](docs/powerbi_paso_a_paso.md).
+oficiales y los resultados del modelo. Archivo: **[`powerbi/Tablero del Ranking.pbix`](powerbi/Tablero%20del%20Ranking.pbix)**
+(se abre con Power BI Desktop, gratis). Guía de armado: [`powerbi/powerbi_paso_a_paso.md`](powerbi/powerbi_paso_a_paso.md).
 
 ![Tablero de Power BI (categoría Ligero)](powerbi/captura_tablero.png)
 
@@ -100,14 +100,14 @@ ufc_ranking/
 │   ├── controles_elo.py    ← controles del ranking
 │   ├── rfm.py · comparar_elo_rfm.py   ← antecedente (primera opción B)
 │   ├── comparar_oficial.py ← comparación con MEDIA y META
-│   ├── modelo.py           ← modelo de machine learning (opción B)
-│   └── preparar_powerbi.py ← arma el Excel para el tablero
-├── powerbi/                ← datos y archivo del tablero de Power BI
+│   └── modelo.py           ← modelo de machine learning (opción B)
+├── powerbi/                ← tablero (.pbix), captura, datos (Excel), tema, guía y preparar_powerbi.py
 ├── etapa1_diagnostico/01_EDA.ipynb    ← análisis exploratorio
-└── docs/                   ← bitácora (el proceso paso a paso) y guía de Power BI
+└── docs/bitacora.md        ← el proceso paso a paso
 ```
 
-**Actualizar después de un evento:** correr los scripts de `src/` en el orden de la lista.
+**Actualizar después de un evento:** correr los scripts de `src/` en el orden de la lista y después
+`powerbi/preparar_powerbi.py`; abrir el `.pbix` y tocar **Actualizar**.
 
 ## 5. Decisiones principales
 
