@@ -322,7 +322,10 @@ with pestanas[1]:
     if texto.strip():                                                    # si se escribió algo...
         lista = lista[lista["peleador"].map(sin_acentos)                 # ...los que contienen ese texto
                       .str.contains(sin_acentos(texto.strip()), regex=False)]   # (sin importar mayúsculas ni tildes)
-    lista = lista.sort_values("peleador")                                # orden alfabético
+    lista = lista.assign(                                                # columnas auxiliares para ordenar:
+        orden_cat=lista["division"].map(CATEGORIAS.index),               # categoría de liviana a pesada
+        orden_puesto=lista["puesto"].replace("C", "0").astype(int))      # campeón = 0, después 1, 2, 3…
+    lista = lista.sort_values(["orden_cat", "orden_puesto"])             # orden del ranking: campeón primero
 
     def etiqueta(nombre):                                                # cómo se ve cada opción del menú
         fila = ranking[ranking["peleador"] == nombre].iloc[0]            # su fila en el ranking
