@@ -66,10 +66,21 @@ entre sí un 86%).
   estable y el Random Forest no mejora de forma significativa.
 - **Conclusión:** los puntos Elo son, junto con la edad, lo que más pesa. El ranking mide algo real.
 
+### Tablero de Power BI
+
+Una sola hoja: top 15 de cada categoría con los puestos de MEDIA y META al lado, cuánto coincide con los
+oficiales y los resultados del modelo. Archivo: **[`powerbi/tablero_ranking_fans.pbix`](powerbi/tablero_ranking_fans.pbix)**
+(se abre con Power BI Desktop, gratis). Guía de armado: [`docs/powerbi_paso_a_paso.md`](docs/powerbi_paso_a_paso.md).
+
+![Tablero de Power BI (categoría Ligero)](powerbi/captura_tablero.png)
+
+Se entrega como `.pbix` en el repositorio, por indicación del profesor: "Publicar en la web" está deshabilitado
+en la cuenta del INA por seguridad.
+
 ### La app (Streamlit)
 
 Ranking por categoría con los oficiales al lado · ficha de cada peleador con su historial de puntos ·
-"¿Quién gana?" (modelo) · comparación con los oficiales · tablero de Power BI · cómo funciona.
+"¿Quién gana?" (modelo) · comparación con los oficiales · cómo funciona.
 
 ## 4. Estructura
 
@@ -89,9 +100,11 @@ ufc_ranking/
 │   ├── controles_elo.py    ← controles del ranking
 │   ├── rfm.py · comparar_elo_rfm.py   ← antecedente (primera opción B)
 │   ├── comparar_oficial.py ← comparación con MEDIA y META
-│   └── modelo.py           ← modelo de machine learning (opción B)
+│   ├── modelo.py           ← modelo de machine learning (opción B)
+│   └── preparar_powerbi.py ← arma el Excel para el tablero
+├── powerbi/                ← datos y archivo del tablero de Power BI
 ├── etapa1_diagnostico/01_EDA.ipynb    ← análisis exploratorio
-└── docs/bitacora.md                   ← el proceso paso a paso
+└── docs/                   ← bitácora (el proceso paso a paso) y guía de Power BI
 ```
 
 **Actualizar después de un evento:** correr los scripts de `src/` en el orden de la lista.
@@ -112,7 +125,7 @@ ufc_ranking/
 
 - **Limitaciones:** la categoría por última pelea, la lista de retirados armada a mano y un deporte
   muy impredecible (~62% de acierto).
-- **Pendientes:** publicar el tablero de Power BI · devolución del usuario (mi hermano) · ajustes
+- **Pendientes:** devolución del usuario (mi hermano) · ajustes
   según el feedback de la cátedra.
 
 El proceso paso a paso y las decisiones están en **[`docs/bitacora.md`](docs/bitacora.md)**.

@@ -1,0 +1,28 @@
+{
+  "name": "Esquina Roja",
+  "dataColors": ["#D20A0A", "#8A8A8A", "#F2F2F2", "#5A5A5A", "#FF6B6B", "#B0B0B0"],
+  "background": "#161616",
+  "foreground": "#F2F2F2",
+  "tableAccent": "#D20A0A",
+  "textClasses": {
+    "callout": { "color": "#F2F2F2" },
+    "title": { "color": "#F2F2F2" },
+    "header": { "color": "#F2F2F2" },
+    "label": { "color": "#CCCCCC" }
+  },
+  "visualStyles": {
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#0B0B0B" } }, "transparency": 0 }],
+        "outspace": [{ "color": { "solid": { "color": "#0B0B0B" } } }]
+      }
+    },
+    "*": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#161616" } }, "transparency": 0 }],
+        "title": [{ "fontColor": { "solid": { "color": "#F2F2F2" } } }],
+        "border": [{ "show": false }]
+      }
+    }
+  }
+}
