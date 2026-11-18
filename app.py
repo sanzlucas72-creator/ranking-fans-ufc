@@ -86,6 +86,7 @@ abrir_con_streamlit()
 # =============================================================================================
 
 import html                                             # para escribir nombres de forma segura dentro del HTML
+import unicodedata                                      # para buscar nombres sin importar las tildes
 
 import altair as alt                                    # gráficos (viene incluido con Streamlit)
 import pandas as pd                                     # tablas
@@ -304,45 +305,77 @@ with pestanas[0]:
 # A3. Pestaña "Ficha del peleador": por qué tiene sus puntos, pelea por pelea
 # ---------------------------------------------------------------------------------------------
 with pestanas[1]:
-    nombres = ranking.sort_values("elo", ascending=False)["peleador"].tolist()  # todos, del mejor al peor
-    elegido = st.selectbox("Elegí un peleador", nombres,                 # menú desplegable
-                           index=nombres.index("Ilia Topuria") if "Ilia Topuria" in nombres else 0)
-    ficha = ranking[ranking["peleador"] == elegido].iloc[0]              # su fila en el ranking
-    peleas = historial[historial["peleador"] == elegido].sort_values("fecha")  # sus peleas, en orden
+    # --- Buscador: primero se acota por categoría y por nombre, después se elige de una lista corta ---
+    f1, f2 = st.columns([2, 3])                                          # dos filtros, uno al lado del otro
+    cat_f = f1.selectbox("Categoría", ["Todas"] + CATEGORIAS, index=4,   # "Todas" + las 8; arranca en Ligero
+                         key="cat_ficha")
+    texto = f2.text_input("Buscar por nombre", placeholder="Ej.: Topuria, Pantoja, Gane…",
+                          key="buscar_ficha")                            # búsqueda libre por nombre
 
-    c1, c2, c3, c4 = st.columns(4)                                       # cuatro datos clave en fila
-    c1.metric("Categoría", ficha["division"])                            # categoría actual
-    c2.metric("Puesto", "Campeón" if ficha["puesto"] == "C" else f"#{ficha['puesto']}")  # puesto
-    c3.metric("Puntos", int(ficha["elo"]))                               # puntaje Elo
-    c4.metric("Récord desde 2010", ficha["record"])                      # récord
+    def sin_acentos(t):                                                  # "Wélter" -> "welter", "Błachowicz" -> "blachowicz"
+        t = t.lower().replace("ł", "l")                                  # la ł no se separa sola de su "acento"
+        return "".join(c for c in unicodedata.normalize("NFD", t) if unicodedata.category(c) != "Mn")
 
-    st.markdown("**Cómo llegó a este puntaje**: todos arrancan con 1500 puntos; cada pelea suma o resta.")
-    grafico = (alt.Chart(peleas)                                         # gráfico de sus puntos en el tiempo
-               .mark_line(point=alt.OverlayMarkDef(color="#ffffff", size=50),   # puntos blancos en cada pelea
-                          color="#d20a0a", strokeWidth=2.5)              # línea roja
-               .encode(x=alt.X("fecha:T", title=None, axis=alt.Axis(format="%Y", tickCount="year")),  # eje X: años
-                       y=alt.Y("elo_despues:Q", title="Puntos", scale=alt.Scale(zero=False)),         # eje Y: puntos
-                       tooltip=[alt.Tooltip("fecha:T", title="Fecha"),   # lo que aparece al pasar el mouse
-                                alt.Tooltip("rival:N", title="Rival"),
-                                alt.Tooltip("resultado:N", title="Resultado"),
-                                alt.Tooltip("cambio:Q", title="Cambio"),
-                                alt.Tooltip("elo_despues:Q", title="Puntos después")])
-               .properties(height=280, background="transparent")         # alto y fondo transparente
-               .configure_axis(labelColor="#9a9a9a", titleColor="#9a9a9a",   # ejes en gris
-                               gridColor="#222222", domainColor="#3a3a3a")
-               .configure_view(strokeWidth=0))                           # sin recuadro
-    st.altair_chart(grafico, use_container_width=True)                   # lo mostramos
+    lista = ranking.copy()                                               # todos los peleadores activos
+    if cat_f != "Todas":                                                 # si se eligió una categoría...
+        lista = lista[lista["division"] == cat_f]                        # ...solo los de esa categoría
+    if texto.strip():                                                    # si se escribió algo...
+        lista = lista[lista["peleador"].map(sin_acentos)                 # ...los que contienen ese texto
+                      .str.contains(sin_acentos(texto.strip()), regex=False)]   # (sin importar mayúsculas ni tildes)
+    lista = lista.sort_values("peleador")                                # orden alfabético
 
-    peleas = peleas.sort_values("fecha", ascending=False)                # la pelea más reciente primero
-    st.dataframe(pd.DataFrame({                                          # tabla con cada pelea explicada
-        "Fecha": peleas["fecha"].dt.strftime("%d/%m/%Y"),
-        "Evento": peleas["evento"],
-        "Qué pasó": peleas.apply(explicar, axis=1),                      # la frase de la función A1
-        "Puntos después": peleas["elo_despues"].round(0).astype(int),
-    }), hide_index=True, use_container_width=True)
-    if elegido in LIMITACION:                                            # aviso de la limitación conocida
-        st.info(f"Los rankings oficiales lo ubican en {LIMITACION[elegido]}; acá figura en "
-                f"{ficha['division']} porque es la categoría de su última pelea.")
+    def etiqueta(nombre):                                                # cómo se ve cada opción del menú
+        fila = ranking[ranking["peleador"] == nombre].iloc[0]            # su fila en el ranking
+        puesto = "Campeón" if fila["puesto"] == "C" else f"#{fila['puesto']}"   # "Campeón" o "#4"
+        return f"{nombre}  ·  {fila['division']} {puesto}"               # ej.: "Ilia Topuria  ·  Ligero #1"
+
+    nombres = lista["peleador"].tolist()                                 # los que quedaron después de filtrar
+    st.caption(f"{len(nombres)} peleadores encontrados. En el menú también se puede escribir para buscar.")
+    elegido = None                                                       # todavía no hay nadie elegido
+    if nombres:                                                          # si la búsqueda encontró a alguien...
+        elegido = st.selectbox("Elegí un peleador", nombres, format_func=etiqueta,  # menú desplegable
+                               index=nombres.index("Ilia Topuria") if "Ilia Topuria" in nombres else 0)
+    else:                                                                # si no encontró a nadie...
+        st.warning("No hay peleadores activos con ese nombre en esa categoría. "
+                   "Probá con otra categoría o con «Todas».")            # ...un aviso, sin cortar la app
+
+    if elegido:                                                          # solo si hay un peleador elegido
+        ficha = ranking[ranking["peleador"] == elegido].iloc[0]              # su fila en el ranking
+        peleas = historial[historial["peleador"] == elegido].sort_values("fecha")  # sus peleas, en orden
+
+        c1, c2, c3, c4 = st.columns(4)                                       # cuatro datos clave en fila
+        c1.metric("Categoría", ficha["division"])                            # categoría actual
+        c2.metric("Puesto", "Campeón" if ficha["puesto"] == "C" else f"#{ficha['puesto']}")  # puesto
+        c3.metric("Puntos", int(ficha["elo"]))                               # puntaje Elo
+        c4.metric("Récord desde 2010", ficha["record"])                      # récord
+
+        st.markdown("**Cómo llegó a este puntaje**: todos arrancan con 1500 puntos; cada pelea suma o resta.")
+        grafico = (alt.Chart(peleas)                                         # gráfico de sus puntos en el tiempo
+                   .mark_line(point=alt.OverlayMarkDef(color="#ffffff", size=50),   # puntos blancos en cada pelea
+                              color="#d20a0a", strokeWidth=2.5)              # línea roja
+                   .encode(x=alt.X("fecha:T", title=None, axis=alt.Axis(format="%Y", tickCount="year")),  # eje X: años
+                           y=alt.Y("elo_despues:Q", title="Puntos", scale=alt.Scale(zero=False)),         # eje Y: puntos
+                           tooltip=[alt.Tooltip("fecha:T", title="Fecha"),   # lo que aparece al pasar el mouse
+                                    alt.Tooltip("rival:N", title="Rival"),
+                                    alt.Tooltip("resultado:N", title="Resultado"),
+                                    alt.Tooltip("cambio:Q", title="Cambio"),
+                                    alt.Tooltip("elo_despues:Q", title="Puntos después")])
+                   .properties(height=280, background="transparent")         # alto y fondo transparente
+                   .configure_axis(labelColor="#9a9a9a", titleColor="#9a9a9a",   # ejes en gris
+                                   gridColor="#222222", domainColor="#3a3a3a")
+                   .configure_view(strokeWidth=0))                           # sin recuadro
+        st.altair_chart(grafico, use_container_width=True)                   # lo mostramos
+
+        peleas = peleas.sort_values("fecha", ascending=False)                # la pelea más reciente primero
+        st.dataframe(pd.DataFrame({                                          # tabla con cada pelea explicada
+            "Fecha": peleas["fecha"].dt.strftime("%d/%m/%Y"),
+            "Evento": peleas["evento"],
+            "Qué pasó": peleas.apply(explicar, axis=1),                      # la frase de la función A1
+            "Puntos después": peleas["elo_despues"].round(0).astype(int),
+        }), hide_index=True, use_container_width=True)
+        if elegido in LIMITACION:                                            # aviso de la limitación conocida
+            st.info(f"Los rankings oficiales lo ubican en {LIMITACION[elegido]}; acá figura en "
+                    f"{ficha['division']} porque es la categoría de su última pelea.")
 
 
 # ---------------------------------------------------------------------------------------------
