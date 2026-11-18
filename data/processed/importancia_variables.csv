@@ -1,0 +1,10 @@
+variable,descripcion,coef_regresion_logistica,importancia_random_forest
+dif_edad,Diferencia de edad el día de la pelea (años),-0.316,0.264
+dif_elo,Diferencia de puntos Elo,0.273,0.26
+dif_pct_victorias,Diferencia de % de victorias,0.047,0.134
+dif_dias_inactivo,Diferencia de días sin pelear,-0.045,0.1
+dif_alcance,Diferencia de alcance (pulgadas),0.086,0.056
+dif_peleas,Diferencia de peleas en la UFC (experiencia),0.03,0.055
+dif_pct_finish,Diferencia de % de victorias por KO o sumisión,-0.02,0.05
+dif_racha,"Diferencia de racha (+ ganando, − perdiendo)",0.012,0.045
+dif_ultimas3,Diferencia de victorias en las últimas 3 peleas,0.063,0.036

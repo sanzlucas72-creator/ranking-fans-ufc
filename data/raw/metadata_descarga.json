@@ -1,0 +1,30 @@
+{
+  "fecha_descarga": "2026-11-16T15:45:56",
+  "fuente": "https://raw.githubusercontent.com/Greco1899/scrape_ufc_stats/main",
+  "tablas": {
+    "ufc_event_details": {
+      "descripcion": "Eventos: nombre, fecha y lugar",
+      "bytes": 103306
+    },
+    "ufc_fight_details": {
+      "descripcion": "Peleas: evento, cruce y link a la pelea",
+      "bytes": 1051382
+    },
+    "ufc_fight_results": {
+      "descripcion": "Resultados: ganador, método, round, categoría",
+      "bytes": 2120060
+    },
+    "ufc_fight_stats": {
+      "descripcion": "Estadísticas por round y por peleador (golpes, derribos...)",
+      "bytes": 7720361
+    },
+    "ufc_fighter_details": {
+      "descripcion": "Peleadores: nombre, apellido, apodo",
+      "bytes": 340441
+    },
+    "ufc_fighter_tott": {
+      "descripcion": "Físico del peleador: altura, peso, alcance, guardia, nacimiento",
+      "bytes": 508399
+    }
+  }
+}

@@ -1,0 +1,5 @@
+modelo,accuracy,f1,auc
+Baseline: gana el de mejor % de victorias,0.601,0.637,
+"Baseline: gana el de más Elo (ranking, sin ML)",0.559,0.569,0.585
+Regresión Logística,0.618,0.638,0.659
+Random Forest,0.622,0.651,0.661

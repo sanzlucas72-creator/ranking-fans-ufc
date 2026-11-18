@@ -1,0 +1,25 @@
+comparacion,division,mismo_campeon,coinciden_de_16,spearman_comunes
+ELO vs MEDIA,Mosca,True,13,0.7
+ELO vs MEDIA,Gallo,True,13,0.92
+ELO vs MEDIA,Pluma,True,10,0.78
+ELO vs MEDIA,Ligero,True,11,0.76
+ELO vs MEDIA,Wélter,True,11,0.55
+ELO vs MEDIA,Mediano,True,13,0.92
+ELO vs MEDIA,Semipesado,True,14,0.32
+ELO vs MEDIA,Pesado,True,11,0.82
+ELO vs META,Mosca,True,13,0.66
+ELO vs META,Gallo,True,14,0.96
+ELO vs META,Pluma,True,12,0.7
+ELO vs META,Ligero,True,11,0.84
+ELO vs META,Wélter,True,11,0.46
+ELO vs META,Mediano,True,13,0.91
+ELO vs META,Semipesado,True,14,0.59
+ELO vs META,Pesado,True,13,0.86
+MEDIA vs META,Mosca,True,13,0.97
+MEDIA vs META,Gallo,True,15,0.93
+MEDIA vs META,Pluma,True,13,0.97
+MEDIA vs META,Ligero,True,14,0.93
+MEDIA vs META,Wélter,True,15,0.97
+MEDIA vs META,Mediano,True,14,0.97
+MEDIA vs META,Semipesado,True,14,0.82
+MEDIA vs META,Pesado,True,12,0.96
