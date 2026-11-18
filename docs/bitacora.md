@@ -29,6 +29,7 @@ H4 faltantes disfrazados ("--") · H5 9 homónimos · H6 120 etiquetas de catego
 | 8 | Modelo de machine learning (`modelo.py`) | El profesor pidió ML. Reemplaza al RFM como opción B y valida el ranking |
 | 9 | Presentación, guion y video (6 min 21 s) | La presentación cubre todo el proyecto, como pidió el profesor |
 | 10 | La app se abre sola con ▷ o F5 | Que el profesor no tenga que escribir comandos |
+| 11 | Publicación: GitHub (`sanzlucas72-creator/ranking-fans-ufc`) + Streamlit Community Cloud → https://ranking-fans-ufc.streamlit.app/ | Requisito de la Etapa 2: la app tiene que estar online para el profesor y el usuario |
 
 ## Modelo de machine learning, en detalle
 
