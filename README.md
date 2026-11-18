@@ -7,6 +7,10 @@ explicable pelea por pelea, más un **modelo de machine learning** que lo pone a
 
 ## ▶ Para abrir la app
 
+**Online (sin instalar nada):** https://ranking-fans-ufc.streamlit.app/
+
+**En la PC:**
+
 1. En VS Code: **Archivo → Abrir carpeta…** → elegir la carpeta **`ufc_ranking`**.
 2. Abrir `app.py` y apretar **▷ (Run Python File)** o **F5**.
 
@@ -72,6 +76,7 @@ Ranking por categoría con los oficiales al lado · ficha de cada peleador con s
 ```
 ufc_ranking/
 ├── app.py                  ← la app (se abre sola con ▷ o F5)
+├── .streamlit/config.toml  ← colores de la app
 ├── requirements.txt        ← librerías
 ├── data/
 │   ├── raw/                ← datos de UFCStats tal cual llegan
