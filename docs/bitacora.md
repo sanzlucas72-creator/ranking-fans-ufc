@@ -30,6 +30,8 @@ H4 faltantes disfrazados ("--") · H5 9 homónimos · H6 120 etiquetas de catego
 | 9 | Presentación, guion y video (6 min 21 s) | La presentación cubre todo el proyecto, como pidió el profesor |
 | 10 | La app se abre sola con ▷ o F5 | Que el profesor no tenga que escribir comandos |
 | 11 | Publicación: GitHub (`sanzlucas72-creator/ranking-fans-ufc`) + Streamlit Community Cloud → https://ranking-fans-ufc.streamlit.app/ | Requisito de la Etapa 2: la app tiene que estar online para el profesor y el usuario |
+| 12 | Tablero de Power BI (`powerbi/`, guía en `docs/powerbi_paso_a_paso.md`) | Requisito de la Etapa 2. Una sola hoja: top 15 vs. oficiales, coincidencias y modelo. Publicado en Power BI con la cuenta del INA |
+| 13 | Ficha del peleador: filtro por categoría, búsqueda por nombre (sin importar tildes) y lista alfabética | Iteración por uso: con 616 peleadores en un solo menú había que scrollear demasiado para encontrar a uno |
 
 ## Modelo de machine learning, en detalle
 
@@ -51,3 +53,5 @@ H4 faltantes disfrazados ("--") · H5 9 homónimos · H6 120 etiquetas de catego
 | D5 | Sin excepciones manuales de categoría | El ranking sale 100% de los datos |
 | D6 | Estilo deportivo sin logos de la UFC; "Ranking no oficial" | No hacerse pasar por la página oficial |
 | D7 | Modelo con orden sorteado y split temporal | Evaluación honesta, sin fuga de datos |
+| D8 | Datos del tablero en Excel, no CSV | Con Windows en español, Power BI lee "0.618" de un CSV como 618 |
+| D9 | Tablero entregado como `.pbix` y PDF | El INA tiene deshabilitado "Publicar en la web" (lo decide el administrador): no se puede embeber público en la app |
