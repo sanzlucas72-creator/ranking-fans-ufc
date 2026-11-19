@@ -32,15 +32,20 @@ H4 faltantes disfrazados ("--") · H5 9 homónimos · H6 120 etiquetas de catego
 | 11 | Publicación: GitHub (`sanzlucas72-creator/ranking-fans-ufc`) + Streamlit Community Cloud → https://ranking-fans-ufc.streamlit.app/ | Requisito de la Etapa 2: la app tiene que estar online para el profesor y el usuario |
 | 12 | Tablero de Power BI (`powerbi/`, con su guía de armado) | Requisito de la Etapa 2. Una sola hoja: top 15 vs. oficiales, coincidencias y modelo. Entregado como `.pbix` + captura en el README |
 | 13 | Ficha del peleador: filtro por categoría, búsqueda por nombre (sin importar tildes) y lista en orden del ranking (campeón, #1, #2…) | Iteración por uso: con 616 peleadores en un solo menú había que scrollear demasiado para encontrar a uno |
+| 14 | Evaluación y comparación de modelos (`etapa2_solucion/02_modelo_predictivo.ipynb`) | Devolución del profesor: faltaba evaluar y comparar los modelos. Regresión Logística vs. Random Forest: validación cruzada temporal, accuracy, precision, recall, F1, AUC, matrices de confusión y curva ROC. Se mantiene la Regresión Logística |
 
 ## Modelo de machine learning, en detalle
 
 - **Fuga de datos evitada:** en UFCStats el primer peleador gana el 57%, así que se sortea quién es A y quién es B.
-  Además, split temporal: entrena con 2012–2023 y prueba con 2024–2026.
+  Además, split temporal: entrena con 2012–2023 (~80%) y prueba con 2024–2026 (~20%, lo más reciente), como se
+  usaría en la realidad. Arranca en 2012 porque 2010–2011 son el calentamiento del Elo (todos con ~1.500 puntos).
 - **Variables:** se eligieron con validación cruzada solo en el entrenamiento. Ranking (7): 56,5% ·
   + edad: 58,7% · **+ alcance: 59,6%** (elegido).
 - **Prueba:** Regresión Logística 61,8% · Random Forest 62,2% · mejor regla simple 60,1% · regla Elo 55,9%.
-- **Elección:** Regresión Logística (probabilidad, coeficientes explicables, estable; el RF no mejora lo suficiente).
+- **Evaluación completa (paso 14):** precision, recall, F1, AUC, matrices de confusión y curva ROC. Los dos modelos
+  quedan parejos en todas las métricas (AUC 0,659 vs. 0,661).
+- **Elección:** Regresión Logística (rinde prácticamente igual que el Random Forest, da una probabilidad y se explica
+  por sus coeficientes). Se elige con la validación cruzada, no mirando la prueba.
 
 ## Decisiones principales
 
