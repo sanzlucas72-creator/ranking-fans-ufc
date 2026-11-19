@@ -61,9 +61,12 @@ entre sí un 86%).
   últimas 3, días sin pelear, edad y alcance.
 - **Sin fuga de datos:** el orden de los peleadores se sortea (en la base, el primero gana el 57%)
   y se entrena con 2012–2023 para probar con 2024–2026.
-- **Resultados (2024–2026):** Regresión Logística 61,8% · Random Forest 62,2% · mejor regla simple 60,1%.
-- **Por qué Regresión Logística:** da probabilidades, se explica por coeficientes (caja blanca), es
-  estable y el Random Forest no mejora de forma significativa.
+- **Evaluación y comparación** ([`etapa2_solucion/02_modelo_predictivo.ipynb`](etapa2_solucion/02_modelo_predictivo.ipynb)):
+  Regresión Logística vs. Random Forest, con validación cruzada temporal, accuracy, precision, recall, F1, AUC,
+  matrices de confusión y curva ROC.
+- **Resultados (2024–2026):** Regresión Logística 61,8% · Random Forest 62,2% · regla "gana el de más Elo" 55,9%.
+- **Por qué Regresión Logística:** rinde prácticamente igual que el Random Forest (0,4 puntos, unas 5 peleas de
+  1.292), da una probabilidad y se explica variable por variable (caja blanca).
 - **Conclusión:** los puntos Elo son, junto con la edad, lo que más pesa. El ranking mide algo real.
 
 ### Tablero de Power BI
@@ -103,6 +106,7 @@ ufc_ranking/
 │   └── modelo.py           ← modelo de machine learning (opción B)
 ├── powerbi/                ← tablero (.pbix), captura, datos (Excel), tema, guía y preparar_powerbi.py
 ├── etapa1_diagnostico/01_EDA.ipynb    ← análisis exploratorio
+├── etapa2_solucion/02_modelo_predictivo.ipynb ← evaluación: Regresión Logística vs. Random Forest
 └── docs/bitacora.md        ← el proceso paso a paso
 ```
 
